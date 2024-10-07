@@ -1,12 +1,149 @@
 
-/* 
+body {
+    background-color: #eaeaea; 
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .app-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #ffbb00; 
+  }
+  
+  h1 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #ffbb00;
+  }
+  
+  
+  .todo-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  
+  .todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f7f7f7;
+    border-left: 5px solid #ffbb00;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+  }
+  
+  .todo-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .todo-item span {
+    font-size: 1.2rem;
+    color: #0578fc;
+  }
+  
+  
+  .delete-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ff4d4f;
+    font-size: 1.5rem;
+    padding-left: 15px;
+  }
+  
+  .todo-item:hover .delete-btn {
+    display: inline;
+  }
+  
+  .delete-btn:hover {
+    color: #ff0000;
+  }
+  
+  .button {
+    background-color: #0578fc;
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
+.button:hover {
+    background-color: #ffbb00; 
+}
+  
+  @media (max-width: 768px) {
+    .app-container {
+      padding: 15px;
+      max-width: 90%;
+    }
+  
+    input[type="text"] {
+      font-size: 1rem;
+      padding: 8px;
+    }
+  
+    .todo-item {
+      padding: 8px;
+    }
+  
+    .todo-item span {
+      font-size: 1rem;
+    }
+  
+    .delete-btn {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .app-container {
+      padding: 10px;
+      max-width: 100%;
+    }
+  
+    input[type="text"] {
+      font-size: 0.9rem;
+      padding: 6px;
+    }
+  
+    .todo-item {
+      padding: 6px;
+    }
+  
+    .todo-item span {
+      font-size: 0.9rem;
+    }
+  
+    .delete-btn {
+      font-size: 0.9rem;
+    }
+  }
+  
