@@ -9,7 +9,7 @@ const App = () => {
 
    // Fetch para obtener las tareas del servidor al cargar la app
    useEffect(() => {
-    fetch("https://playground.4geeks.com/todo/docs#/")
+    fetch("https://playground.4geeks.com/todo/docs")
       .then((resp) => resp.json()) 
       .then((data) => {
         console.log(data); // Tareas recibidas del servidor

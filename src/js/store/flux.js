@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Obtener tareas desde la API y guardarlas en el store
             loadTasks: async () => {
                 try {
-                    const response = await fetch("https://playground.4geeks.com/todo/docs#/");
+                    const response = await fetch("https://playground.4geeks.com/todo/users/auix15");
                     if (!response.ok) throw new Error("Error fetching tasks");
                     const data = await response.json();
                     setStore({ tasks: data });
@@ -19,16 +19,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             addTasks: async (task) => {
                 try {
                     const store = getStore();
-                    const updatedTasks = [...store.tasks, { label: task, done: false }];
-
-                    const response = await fetch("https://playground.4geeks.com/todo/docs#/", {
-                        method: "PUT",
+                    //CREAR OBJETO DE LA API
+                    const newTasks = { label: task, done: false, }
+                    
+                    //MODIFICAR RUTA CORRECTA
+                    const response = await fetch("https://playground.4geeks.com/todo/users/auix15", {
+                        method: "POST", //CAMBIAR A POST
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(updatedTasks),
+                        body: JSON.stringify(newTasks),
                     });
+                    //TRAER LOS DATOS QUE SE CREARON
+                    const data = await response.json(); //DATA TIENE EL ID
 
                     if (!response.ok) throw new Error("Error adding task");
-
+                    //HACER LUEGO DE QUE SE CREO LA NUEVA TAREA
+                    const updatedTasks = [...store.tasks, data];
                     // Actualiza el estado con la nueva lista de tareas
                     setStore({ tasks: updatedTasks });
                 } catch (error) {
@@ -39,15 +44,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             deleteTask: async (taskId) => {
                 try {
                     const store = getStore();
-                    const updatedTasks = store.tasks.filter((_, index) => index !== taskId);
-
-                    const response = await fetch("https://playground.4geeks.com/todo/docs#/", {
+                    
+                    //EN LA URL PASAR EL TASK/ID?
+                    const response = await fetch("https://playground.4geeks.com/todo/users/auix15", {
                         method: "DELETE",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ tasks: updatedTasks }),
+                        
                     });
 
                     if (!response.ok) throw new Error("Error deleting task");
+                    //BORRAR LUEGO DE QUE SE BORRARA LA TAREA
+                    const updatedTasks = store.tasks.filter((_, index) => index !== taskId);
 
                     // Actualiza el estado con la nueva lista de tareas
                     setStore({ tasks: updatedTasks });
