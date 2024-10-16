@@ -3,12 +3,13 @@ import TodoItem from './todoItem';
 
 
 const TodoList = ({ tasks, removeTask }) => {
+  const validTasks = Array.isArray(tasks) ? tasks : [];
   return (
     <div className="todo-list">
-      {tasks.length === 0 ? (
+      {validTasks.length === 0 ? (
         <p><strong>Descansa. No hay nada pendiente ;)</strong></p>
       ) : (
-        tasks.map((task, index) => (
+        validTasks.map((task, index) => (
           <TodoItem
             key={index}
             id={index}

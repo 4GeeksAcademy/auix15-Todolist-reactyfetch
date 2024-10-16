@@ -13,7 +13,7 @@ const UserForm = () => {
     e.preventDefault();
     setError(null);
     try {
-      const response = await fetch(`https://playground.4geeks.com/todo/users/${username}`, {
+      const response = await fetch(`https://playground.4geeks.com/todo/users/${auix15}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
