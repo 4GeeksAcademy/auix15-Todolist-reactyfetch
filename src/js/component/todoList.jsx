@@ -9,16 +9,16 @@ const TodoList = ({ tasks, deleteTask }) => {
         <p><strong>Descansa. No hay nada pendiente ;)</strong></p>
       ) : (
         validTasks.map((task, index) => (
-          <div className="todo-item" key={
-            index
-          }>
-          <span>{task.label}</span>
+          <div className="todo-item" key={index}>
+          <span className={task.is_done ? "completed" : ""}>
+            {task.label}
+          </span>
           <button 
             className="delete-btn" 
             onClick={() => deleteTask(task.id)} 
             aria-label={`Eliminar tarea ${task.label}`}
           >
-            ❌
+            ✅
           </button>
         </div>
             ))

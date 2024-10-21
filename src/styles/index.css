@@ -81,8 +81,9 @@ body {
     display: inline;
   }
   
-  .delete-btn:hover {
-    color: #ff0000;
+  .completed {
+    text-decoration: line-through;
+    
   }
   
   .button {
