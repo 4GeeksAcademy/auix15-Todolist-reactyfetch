@@ -8,7 +8,7 @@ import UserForm from "./userForm";
 const App = () => {
   const [tasks, setTasks] = useState([]);
 
-   // Fetch para obtener las tareas del servidor al cargar la app
+   // Fetch para obtener las tareas del servidor al cargar la app. Inicia el cmponente
    useEffect(() => {
     fetch("https://playground.4geeks.com/todo/users/auix15")
       .then((resp) => resp.json()) 
@@ -28,39 +28,53 @@ const App = () => {
       const newTask = {
         "label": task,
         "is_done": false
-      }
-      const updatedTasks = [...tasks, newTask];
-      setTasks(updatedTasks);
-      // Sincronizar con el servidor
-      updateServerTasks(newTask);
-    }
-  };
-
-  // Función para eliminar una tarea
-  const removeTask = (taskIndex) => {
-    const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
-    setTasks(updatedTasks);
-    // Sincronizar con el servidor
-    updateServerTasks(updatedTasks);
-  };
+      };
+      addTaskToServer(newTask)
+  }};
+  
+    const addTaskToServer = (newTask) => {
+      fetch("https://playground.4geeks.com/todo/todos/auix15", {
+        method: "POST",
+        body: JSON.stringify(newTask),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((resp) => resp.json())
+        .then((addedTask) => {
+          setTasks([...tasks, addedTask]);
+          console.log("Nueva tarea agregada:", addedTask)
+        })
+        .catch((error) => {
+          console.error("Error syncing tasks:", error); 
+        });
+    };
+    
+    const completeTask = (taskId) => {
+      const taskToUpdate = tasks.find((task) => task.id === taskId);
+        if(taskToUpdate) {
+          const updatedTasks = {...taskToUpdate, is_done: true};
+          updateTaskOnServer(updatedTasks)
+        }
+    };
 
    // Función para sincronizar las tareas con el servidor
-   const updateServerTasks = (updatedTasks) => {
-   
-      
-    fetch("https://playground.4geeks.com/todo/users/auix15", {
-      method: "POST",
-      body: JSON.stringify(updatedTasks),
+   const updateTaskOnServer = (updatedTask) => {
+    fetch(`https://playground.4geeks.com/todo/todos/${updatedTask.id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedTask),
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((resp) => {
-        console.log("Tareas sincronizadas:", resp.ok); 
-      })
-      .catch((error) => {
-        console.error("Error syncing tasks:", error); 
-      });
+    .then((resp) => resp.json())
+    .then((task) => {
+      setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
+      console.log("Tarea actualizada:", task)
+    })
+    .catch((error) => {
+      console.error("Error syncing tasks:", error); 
+    });
   };
 
   return (
@@ -69,7 +83,7 @@ const App = () => {
       <Input addTask={addTask} />
       {/* Expresión para contar las tareas */}
       <p>{tasks.length} {tasks.length === 1 ? "tarea" : "tareas"} pendientes</p>
-      <TodoList tasks={tasks} removeTask={removeTask} />
+      <TodoList tasks={tasks} deleteTask={completeTask} />
       <UserForm/>
     </div>
   );

@@ -1,8 +1,7 @@
 import React from 'react';
-import TodoItem from './todoItem';
 
 
-const TodoList = ({ tasks, removeTask }) => {
+const TodoList = ({ tasks, deleteTask }) => {
   const validTasks = Array.isArray(tasks) ? tasks : [];
   return (
     <div className="todo-list">
@@ -10,16 +9,23 @@ const TodoList = ({ tasks, removeTask }) => {
         <p><strong>Descansa. No hay nada pendiente ;)</strong></p>
       ) : (
         validTasks.map((task, index) => (
-          <TodoItem
-            key={index}
-            id={index}
-            text={task.label}
-            deleteTask={removeTask}
-          />
-        ))
+          <div className="todo-item" key={
+            index
+          }>
+          <span>{task.label}</span>
+          <button 
+            className="delete-btn" 
+            onClick={() => deleteTask(task.id)} 
+            aria-label={`Eliminar tarea ${task.label}`}
+          >
+            ❌
+          </button>
+        </div>
+            ))
       )}
       
     </div>
+
   );
 };
 
